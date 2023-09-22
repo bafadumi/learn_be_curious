@@ -1,0 +1,58 @@
+{% extends "base.html" %} {% block content %}
+<div class="container d-flex justify-content-center align-items-center p-5">
+    <div class="card text-center" style="width: 50%">
+        <div class="card-body">
+            <h5 class="card-title">{{improvement.name}}</h5>
+            <div class="card-text p-2">
+                <span class="text-success">Description: </span><br />{{improvement.description}}
+            </div>
+            <div class="card-text p-2"><span class="text-success">Beans: </span><br />{{improvement.beans}}</div>
+            <a
+                class="btn btn-success"
+                href="{{url_for('improvement.edit', improvement_id=improvement.id, system_id=improvement.system_id)}}"
+                >Edit this Improvement</a
+            >
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Delete Improvement
+            </button>
+            <div
+                class="modal fade"
+                id="staticBackdrop"
+                data-bs-backdrop="static"
+                data-bs-keyboard="false"
+                tabindex="-1"
+                aria-labelledby="staticBackdropLabel"
+                aria-hidden="true"
+            >
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Delete System</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div>Deleting a System is permanent, are you sure?</div>
+                        </div>
+                        <div class="modal-footer">
+                            {% if current_user.type == 'admin' %}
+                            <a
+                                class="btn btn-primary"
+                                href="{{url_for('improvement.delete', improvement_id=improvement.id, system_id=improvement.system_id)}}"
+                                >Yes</a
+                            >
+                            {% else %}
+                            <div>You must be an admin to delete a System</div>
+                            {%endif%}
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if came_from == 'improvements' %}
+        <a class="btn btn-primary" href="{{url_for('improvement.improvements')}}">Back to Improvements</a>
+        {% else %}
+        <a class="btn btn-primary" href="{{url_for('system.view', system_id=improvement.system_id)}}">Back to System</a>
+        {%endif%} {% endblock %}
+    </div>
+</div>

@@ -1,0 +1,17 @@
+{% extends "base.html" %} {% block content %}
+<div class="jumbotron">
+    <div class="container">
+        <h1 class="display-4"> Curiousity at it's finest </h1>
+        <p class="lead">!An area where as a team we pinpoint the weakest errors of our glorious systems!</p>
+        <div class="home-links">
+            <div>
+                <a class="btn btn-primary" href="{{url_for('system.systems')}}">View Systems</a>
+            </div>
+            <p>    </p>
+            <div>
+                <a class="btn btn-primary" href="{{url_for('improvement.improvements')}}">View Improvements</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "base.html" %} {% block content %} 
+{% with messages = get_flashed_messages() %} 
+{% if messages %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">{{ messages[0] }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %} 
+{% endwith %}
+
+<div class="container">
+<div class="alert alert-danger"><a href="{{ url_for('system.create') }}">Add a new System</a></div>
+<div class="systems">
+    {% for system in systems %}
+    <div class="card">
+        <h3 class="card-header text-warning">{{system.name}}</h3>
+        <div class="card-body">
+            <h5 class="card-title">{{system.system_health}}</h5>
+            <p class="card-text">Priority: {{system.priority}}</p>
+            <p class="card-text">{{system.tech_stack}}</p>
+            <p class="card-text">{{system.language}}</p>
+            <p class="card-text">Description: {{system.description}}</p>
+            <a class="btn btn-success" href="{{url_for('system.edit', system_id=system.id)}}">Edit</a>
+            <a class="btn btn-success" href="{{url_for('system.view', system_id=system.id)}}">View</a>
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Delete
+            </button>
+        </div>
+    </div>
+        <div
+            class="modal fade"
+            id="staticBackdrop"
+            data-bs-backdrop="static"
+            data-bs-keyboard="false"
+            tabindex="-1"
+            aria-labelledby="staticBackdropLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Delete System</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div>Deleting a System is permanent, are you sure?</div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        {% if current_user.type == 'admin' %}
+                        <a class="btn btn-success" href="{{url_for('system.delete', system_id=system.id)}}">Yes</a>
+                        {% else %}
+                        <div>You must be an admin to delete a System</div>
+                        {%endif%}
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+</div>
+</div>
+{% endblock %}
